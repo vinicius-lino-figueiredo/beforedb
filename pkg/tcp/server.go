@@ -29,9 +29,13 @@ func (d *server) Serve(ctx context.Context, port int) (err error) {
 	defer listener.Close()
 
 	for {
-		_, err := listener.Accept()
+		conn, err := listener.Accept()
 		if err != nil {
 			return err
 		}
+		go d.HandleConnection(conn)
 	}
+}
+
+func (d *server) HandleConnection(conn net.Conn) {
 }
