@@ -2,6 +2,7 @@ package tcp
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"net"
 )
@@ -12,9 +13,11 @@ func NewServer() Server {
 
 type Server interface {
 	Serve(ctx context.Context, port int) error
+	AddCertificate(cert tls.Certificate)
 }
 
 type server struct {
+	certificates []tls.Certificate
 }
 
 func (d *server) Serve(ctx context.Context, port int) (err error) {
@@ -25,6 +28,12 @@ func (d *server) Serve(ctx context.Context, port int) (err error) {
 	if err != nil {
 		return
 	}
+
+	tlsCfg := &tls.Config{
+		Certificates: d.certificates,
+	}
+
+	listener = tls.NewListener(listener, tlsCfg)
 
 	defer listener.Close()
 
@@ -38,4 +47,8 @@ func (d *server) Serve(ctx context.Context, port int) (err error) {
 }
 
 func (d *server) HandleConnection(conn net.Conn) {
+}
+
+func (d *server) AddCertificate(cert tls.Certificate) {
+	d.certificates = append(d.certificates, cert)
 }
