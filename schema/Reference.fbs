@@ -1,0 +1,12 @@
+namespace system;
+
+enum RefType:uint {
+  TABLE=0,
+}
+
+table Reference {
+  reference_name:string(id: 0, key);
+  reference_type:RefType(id: 1);
+}
+
+root_type Reference;

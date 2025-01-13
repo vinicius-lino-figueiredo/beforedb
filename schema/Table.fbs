@@ -1,0 +1,12 @@
+namespace system;
+
+table Table {
+  columns:[Column] (id: 0);
+}
+
+table Column{
+  name:string (id: 0);
+  type:uint (id: 1);
+}
+
+root_type Table;
