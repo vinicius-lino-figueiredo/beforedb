@@ -1,0 +1,6 @@
+namespace system;
+
+table TableReference {
+  reference_name:string(id: 0, key);
+  table_id:[ubyte](id: 1);
+}

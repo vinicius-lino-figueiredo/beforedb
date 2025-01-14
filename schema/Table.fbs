@@ -1,12 +1,16 @@
 namespace system;
 
 table Table {
-  Columns:[Column] (id: 0);
+  columns:[KeyValue] (id: 0);
+}
+
+table KeyValue {
+  name:string (id: 0, key);
+  column:Column (id:1);
 }
 
 table Column{
-  Name:string (id: 0);
-  Type:uint (id: 1);
+  type:uint (id: 0);
 }
 
 root_type Table;
